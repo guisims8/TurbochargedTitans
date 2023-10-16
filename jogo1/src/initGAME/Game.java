@@ -2,20 +2,32 @@ package initGAME;
 
 import carFactory.Car;
 import carFactory.CarFactory;
+import gridFactory.GridBackground;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Game {
-Car car;
+    private final GridBackground grid = new GridBackground();
 
-    private CarFactory[] carFactory;
 
-    public static void start (Car car) {
+    public Game() {
+
+    }
+
+    public void start() {
+        grid.initgrid();
+        Picture car = new Picture(460, 515, "images/porsche.png");
+        car.draw();
+        PlayerCar eventHandler = new PlayerCar(car);
+
+        play();
+    }
+
+    public void play() {
 
         while (true) {
-
             // Pause for a while
             CustomSleep.sleep(10);
-            car.moveCar();
         }
 
     }

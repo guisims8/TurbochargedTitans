@@ -4,6 +4,16 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class CarFactory {
 
+
+
+
+
+
+
+
+
+
+
     EnemyCars[] randomCars = new EnemyCars[100];
 
     public void getCars() {

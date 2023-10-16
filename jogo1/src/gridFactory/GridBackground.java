@@ -1,26 +1,31 @@
 package gridFactory;
 
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class GridBackground {
     public static final int PADDINGY = 10;
     public static final int PADDINGX = 185;
-    private final int cols = 495;
-    private final int rows = 655;
+    private static final int cols = 495;
+    private static final int rows = 655;
+    private Rectangle field;
+    private Picture road;
 
 
+    public void initgrid() {
+        this.field = new Rectangle(PADDINGX, PADDINGY, cols, rows);
+        field.draw();
+        road = new Picture(13, 13, "images/pista1.png");
+        road.draw();
 
-    public void initgrid(){
-        Rectangle rectangle = new Rectangle(PADDINGX, PADDINGY, cols, rows);
-        rectangle.draw();
     }
 
     public int getCols() {
         return cols;
     }
 
-    public int getRows(){
+    public int getRows() {
         return rows;
     }
 }

@@ -7,13 +7,13 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class EventHandler implements KeyboardHandler {
+public class PlayerCar implements KeyboardHandler {
 
-    private Picture car;
+    private final Picture carPicture;
     GridBackground grid1 = new GridBackground();
 
-    public EventHandler(Picture car) {
-       this.car = car;
+    public PlayerCar(Picture car) {
+       this.carPicture = car;
     }
 
     public void init() {
@@ -54,13 +54,10 @@ public class EventHandler implements KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-       // GridBackground grid1 = new GridBackground();
-       // grid1.initgrid();
 
-
-        int carX = car.getX();
+        int carX = carPicture.getX();
         //System.out.println(car.getX());
-        int carY = car.getY();
+        int carY = carPicture.getY();
         //System.out.println(car.getY());
 
 
@@ -69,30 +66,30 @@ public class EventHandler implements KeyboardHandler {
             case KeyboardEvent.KEY_RIGHT:
                 if (carX - 110 <= grid1.getCols()) {
                     //grid1.getCols() >= -100 + carX) WTFFF ISS THATT
-                    car.translate(15, 0);
+                    carPicture.translate(15, 0);
                 }
                 break;
 
             case KeyboardEvent.KEY_LEFT:
                 if (carX + 303 > grid1.getCols()) {
-                    car.translate(-15, 0);
+                    carPicture.translate(-15, 0);
                 }
                 break;
 
             case KeyboardEvent.KEY_UP:
                 if(carY + 615 > grid1.getRows()){
-                    car.translate(0, -15);
+                    carPicture.translate(0, -15);
                 }
                 break;
 
             case KeyboardEvent.KEY_DOWN:
                 if (carY + 140 < grid1.getRows()) {
-                    car.translate(0, 20);
+                    carPicture.translate(0, 20);
                 }
                 break;
 
             case KeyboardEvent.KEY_SPACE:
-                car.translate(0, -40);
+                carPicture.translate(0, -40);
                 break;
 
 
