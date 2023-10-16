@@ -1,21 +1,22 @@
 package carFactory;
 
-import gridFactory.GridBackground;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import gridFactory.Grid;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Car {
     Picture picture;
 
     public Car() {
-        this.picture = new Picture(GridBackground.PADDINGX, GridBackground.PADDINGY, "images/boat2.png");
+        this.picture = new Picture(Grid.PADDINGX, Grid.PADDINGY, "images/boat2.png");
         picture.draw();
     }
 
 
     public void moveCar() {
         this.getPicture().translate(0, 3);
+        if(this.getPicture().getMaxY()>Grid.PADDINGY+Grid.rows-30){
+            this.getPicture().delete();
+        }
     }
 
 

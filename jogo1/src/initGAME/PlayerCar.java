@@ -1,22 +1,29 @@
 package initGAME;
 
-import gridFactory.GridBackground;
+import gridFactory.Grid;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import static gridFactory.Grid.PADDINGX;
+import static gridFactory.Grid.PADDINGY;
+
+
 public class PlayerCar implements KeyboardHandler {
 
-    private final Picture carPicture;
-    GridBackground grid1 = new GridBackground();
+    private final Picture car;
+    Grid grid1 = new Grid();
 
-    public PlayerCar(Picture car) {
-       this.carPicture = car;
+    public PlayerCar() {
+        this.car = new Picture(368, 430, "images/porsche.png");
     }
 
+
     public void init() {
+        car.draw();
+
 
         Keyboard kb = new Keyboard(this);
 
@@ -55,41 +62,40 @@ public class PlayerCar implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
-        int carX = carPicture.getX();
-        //System.out.println(car.getX());
-        int carY = carPicture.getY();
-        //System.out.println(car.getY());
+        int minCarX = car.getX();
+        int minCarY = car.getY();
+        int maxCarX = car.getMaxX();
+        int maxCarY = car.getMaxY();
 
 
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_RIGHT:
-                if (carX - 110 <= grid1.getCols()) {
-                    //grid1.getCols() >= -100 + carX) WTFFF ISS THATT
-                    carPicture.translate(15, 0);
+                if (maxCarX-43 < grid1.getCols() + PADDINGX) {
+                    car.translate(15, 0);
                 }
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                if (carX + 303 > grid1.getCols()) {
-                    carPicture.translate(-15, 0);
+                if (minCarX+35 > PADDINGX) {
+                    car.translate(-15, 0);
                 }
                 break;
 
             case KeyboardEvent.KEY_UP:
-                if(carY + 615 > grid1.getRows()){
-                    carPicture.translate(0, -15);
+                if (minCarY > PADDINGY) {
+                    car.translate(0, -15);
                 }
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (carY + 140 < grid1.getRows()) {
-                    carPicture.translate(0, 20);
+                if (maxCarY < grid1.getRows()+PADDINGY) {
+                    car.translate(0, 20);
                 }
                 break;
 
             case KeyboardEvent.KEY_SPACE:
-                carPicture.translate(0, -40);
+                car.translate(0, -40);
                 break;
 
 
