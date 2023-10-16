@@ -1,5 +1,6 @@
 package initGAME;
 
+import carFactory.Car;
 import gridFactory.GridBackground;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -12,11 +13,16 @@ public class EventHandler implements KeyboardHandler {
     private Picture car;
     GridBackground grid1 = new GridBackground();
 
+    MenuStart menu = new MenuStart();
+
     public EventHandler(Picture car) {
-       this.car = car;
+        this.car = car;
+        menu.MenuStart();
     }
 
     public void init() {
+
+
 
         Keyboard kb = new Keyboard(this);
 
@@ -43,6 +49,11 @@ public class EventHandler implements KeyboardHandler {
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKey(KeyboardEvent.KEY_SPACE);
 
+        KeyboardEvent enter = new KeyboardEvent();
+        enter.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        enter.setKey(KeyboardEvent.KEY_ENTER);
+
+        kb.addEventListener(enter);
         kb.addEventListener(down);
         kb.addEventListener(up);
         kb.addEventListener(right);
@@ -52,11 +63,9 @@ public class EventHandler implements KeyboardHandler {
 
     }
 
+
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-       // GridBackground grid1 = new GridBackground();
-       // grid1.initgrid();
-
 
         int carX = car.getX();
         //System.out.println(car.getX());
@@ -80,7 +89,7 @@ public class EventHandler implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_UP:
-                if(carY + 615 > grid1.getRows()){
+                if (carY + 615 > grid1.getRows()) {
                     car.translate(0, -15);
                 }
                 break;
@@ -95,16 +104,17 @@ public class EventHandler implements KeyboardHandler {
                 car.translate(0, -40);
                 break;
 
+            case KeyboardEvent.KEY_ENTER:
+                
+                menu.DeleteMenu();
+                break;
 
         }
-
-
     }
 
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
 
     }
 }
