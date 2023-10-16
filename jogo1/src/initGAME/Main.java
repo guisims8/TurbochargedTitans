@@ -7,7 +7,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Main {
 
     public static void main(String[] args) {
-
+        System.out.println("hello world");
        /* CarFactory carFactory = new CarFactory();
         carFactory.getCars(); */
 
