@@ -4,15 +4,14 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 
 public class GridBackground {
-
+    public static final int PADDINGY = 10;
+    public static final int PADDINGX = 185;
     private final int cols = 495;
     private final int rows = 655;
 
 
 
     public void initgrid(){
-        int PADDINGY = 10;
-        int PADDINGX = 185;
         Rectangle rectangle = new Rectangle(PADDINGX, PADDINGY, cols, rows);
         rectangle.draw();
     }
