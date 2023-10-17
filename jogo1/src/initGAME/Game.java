@@ -8,7 +8,7 @@ public class Game {
     PlayerCar playerCar;
     Car car;
 
-
+    MenuStart menu = new MenuStart();
     public Game() {
         this.grid = new Grid();
         this.playerCar = new PlayerCar();

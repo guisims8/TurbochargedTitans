@@ -16,13 +16,17 @@ public class PlayerCar implements KeyboardHandler {
     private final Picture car;
     Grid grid1 = new Grid();
 
+    MenuStart menu = new MenuStart();
+
     public PlayerCar() {
         this.car = new Picture(368, 430, "images/carblue.png");
+        //menu.MenuStart();
     }
 
 
     public void init() {
         car.draw();
+        menu.MenuStart();
         Keyboard kb = new Keyboard(this);
 
         KeyboardEvent right = new KeyboardEvent();
@@ -48,6 +52,12 @@ public class PlayerCar implements KeyboardHandler {
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKey(KeyboardEvent.KEY_SPACE);
 
+        KeyboardEvent enter = new KeyboardEvent();
+        enter.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        enter.setKey(KeyboardEvent.KEY_ENTER);
+
+
+        kb.addEventListener(enter);
         kb.addEventListener(down);
         kb.addEventListener(up);
         kb.addEventListener(right);
@@ -87,13 +97,18 @@ public class PlayerCar implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (maxCarY < grid1.getRows()+PADDINGY) {
+                if (maxCarY < grid1.getRows() + PADDINGY) {
                     car.translate(0, 20);
                 }
                 break;
 
             case KeyboardEvent.KEY_SPACE:
                 car.translate(0, -40);
+                break;
+
+
+            case KeyboardEvent.KEY_ENTER:
+                menu.DeleteMenu();
                 break;
 
 
