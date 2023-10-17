@@ -23,8 +23,6 @@ public class PlayerCar implements KeyboardHandler {
 
     public void init() {
         car.draw();
-
-
         Keyboard kb = new Keyboard(this);
 
         KeyboardEvent right = new KeyboardEvent();
