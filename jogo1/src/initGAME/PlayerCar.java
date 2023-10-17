@@ -87,7 +87,7 @@ public class PlayerCar implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (maxCarY < grid1.getRows()+PADDINGY) {
+                if (maxCarY < Grid.getRows()+PADDINGY) {
                     car.translate(0, 20);
                 }
                 break;

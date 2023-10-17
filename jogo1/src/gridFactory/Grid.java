@@ -20,11 +20,11 @@ public class Grid {
 
     }
 
-    public int getCols() {
+    public static int getCols() {
         return cols;
     }
 
-    public int getRows() {
+    public static int getRows() {
         return rows;
     }
 }
