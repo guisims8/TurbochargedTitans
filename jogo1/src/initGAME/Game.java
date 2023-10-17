@@ -2,23 +2,41 @@ package initGAME;
 
 import carFactory.Car;
 import gridFactory.Grid;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
-    private final Grid grid;
     PlayerCar playerCar;
-    Car car;
+    List<Car> cars = new LinkedList<>();
+    private int carSpawnTimer = 0;
 
+    MenuStart menu = new MenuStart();
 
     public Game() {
-        this.grid = new Grid();
         this.playerCar = new PlayerCar();
     }
 
     public void start() {
-        grid.initgrid();
+        Grid.initgrid();
         playerCar.init();
-        car = new Car();
+        Car car = new Car();
+        cars.add(car);
         play();
+        /*while(!playerCar.isEnterKeyPressed()) {
+            //playerCar.init();
+            menu.MenuStart();
+        }
+        if(playerCar.isEnterKeyPressed()){
+            menu.DeleteMenu();
+            Grid.initgrid();
+            playerCar.init();
+            Car car = new Car();
+            cars.add(car);
+            play();
+        }*/
     }
 
     public void play() {
@@ -26,9 +44,30 @@ public class Game {
         while (true) {
             // Pause for a while
             CustomSleep.sleep(10);
-            car.moveCar();
+            if (carSpawnTimer == 100) {
+                Car car1 = new Car();
+                cars.add(car1);
+                carSpawnTimer = 0;
+            }
 
-            PlayerCar.collisionDetector(car.getPicture());
+            if (playerCar.isRightPressed()) {
+                playerCar.moveRight();
+            }
+
+            if(playerCar.isLeftPressed()){
+                playerCar.moveLeft();
+            }
+            if (1 == 1) {
+            }
+
+            Car.moveCars(cars);
+            carSpawnTimer++;
+            for(int i=0; i<cars.size();i++){
+                playerCar.isColliding(cars.get(i).getPicture());
+
+            }
+
+            //PlayerCar.collisionDetector(car.getPicture());
         }
 
     }

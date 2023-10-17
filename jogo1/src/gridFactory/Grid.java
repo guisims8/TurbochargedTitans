@@ -9,11 +9,10 @@ public class Grid {
     public static final int PADDINGX = 220;
     public static final int cols = 810;
     public static final int rows = 600;
-    private Picture roadImage;
 
 
-    public void initgrid() {
-        this.roadImage = new Picture(13, 13, "images/final.png");
+    public static void initgrid() {
+        Picture roadImage = new Picture(13, 13, "images/final.png");
         roadImage.draw();
         Rectangle rectangle = new Rectangle(PADDINGX,PADDINGY,cols,rows);
         rectangle.draw();
