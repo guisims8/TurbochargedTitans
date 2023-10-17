@@ -17,7 +17,7 @@ public class PlayerCar implements KeyboardHandler {
     Grid grid1 = new Grid();
 
     public PlayerCar() {
-        this.car = new Picture(368, 430, "images/porsche.png");
+        this.car = new Picture(368, 430, "images/carblue.png");
     }
 
 

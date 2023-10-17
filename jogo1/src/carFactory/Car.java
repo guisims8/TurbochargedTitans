@@ -8,7 +8,7 @@ public class Car {
     Picture picture;
 
     public Car() {
-        this.picture = new Picture(Grid.PADDINGX, Grid.PADDINGY, "images/boat2.png");
+        this.picture = new Picture(Grid.PADDINGX, Grid.PADDINGY, "images/cargreen.png");
         picture.draw();
     }
 

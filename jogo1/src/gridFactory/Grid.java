@@ -13,7 +13,7 @@ public class Grid {
 
 
     public void initgrid() {
-        this.roadImage = new Picture(13, 13, "images/pista1.png");
+        this.roadImage = new Picture(13, 13, "images/final.png");
         roadImage.draw();
         Rectangle rectangle = new Rectangle(PADDINGX,PADDINGY,cols,rows);
         rectangle.draw();
