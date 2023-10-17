@@ -27,6 +27,8 @@ public class Game {
             // Pause for a while
             CustomSleep.sleep(10);
             car.moveCar();
+
+            PlayerCar.collisionDetector(car.getPicture());
         }
 
     }

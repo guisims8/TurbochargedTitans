@@ -102,6 +102,10 @@ public class PlayerCar implements KeyboardHandler {
 
     }
 
+    public static boolean collisionDetector(Picture picture){
+        return true;
+    }
+
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
