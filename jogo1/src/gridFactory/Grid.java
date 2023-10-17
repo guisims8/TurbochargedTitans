@@ -5,9 +5,9 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class Grid {
-    public static final int PADDINGY = 100;
-    public static final int PADDINGX = 143;
-    public static final int cols = 585;
+    public static final int PADDINGY = 120;
+    public static final int PADDINGX = 220;
+    public static final int cols = 810;
     public static final int rows = 600;
     private Picture roadImage;
 

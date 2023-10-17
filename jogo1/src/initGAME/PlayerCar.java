@@ -71,6 +71,8 @@ public class PlayerCar implements KeyboardHandler {
             case KeyboardEvent.KEY_RIGHT:
                 if (maxCarX < grid1.getCols() + PADDINGX) {
                     car.translate(15, 0);
+                } else {
+                    System.out.println(maxCarX);
                 }
                 break;
 
@@ -87,7 +89,7 @@ public class PlayerCar implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (maxCarY < Grid.getRows()+PADDINGY) {
+                if (maxCarY < Grid.getRows() + PADDINGY) {
                     car.translate(0, 20);
                 }
                 break;
@@ -102,7 +104,7 @@ public class PlayerCar implements KeyboardHandler {
 
     }
 
-    public static boolean collisionDetector(Picture picture){
+    public static boolean collisionDetector(Picture picture) {
         return true;
     }
 
