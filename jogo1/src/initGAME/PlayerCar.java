@@ -69,13 +69,13 @@ public class PlayerCar implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_RIGHT:
-                if (maxCarX-43 < grid1.getCols() + PADDINGX) {
+                if (maxCarX < grid1.getCols() + PADDINGX) {
                     car.translate(15, 0);
                 }
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                if (minCarX+35 > PADDINGX) {
+                if (minCarX > PADDINGX) {
                     car.translate(-15, 0);
                 }
                 break;
