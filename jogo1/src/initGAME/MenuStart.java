@@ -4,10 +4,10 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class MenuStart {
 
-    Picture picture;
+    private static Picture picture;
 
 
-    public void MenuStart(){
+    public static void MenuStart(){
 
         picture = new Picture(13,13,"images/menufinal.png");
         picture.draw();
@@ -15,8 +15,8 @@ public class MenuStart {
     }
 
 
-    public void DeleteMenu(){
-        this.picture.delete();
+    public static void DeleteMenu(){
+        picture.delete();
     }
 
 }

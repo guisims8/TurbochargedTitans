@@ -1,31 +1,31 @@
 package initGAME;
 
 import carFactory.Car;
+import carFactory.CarFactory;
+import carFactory.PlayerCar;
 import gridFactory.Grid;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
     PlayerCar playerCar;
-    List<Car> cars = new LinkedList<>();
+    private List<Car> cars = new LinkedList<>();
     private int carSpawnTimer = 200;
     private int carSpawnTimerCounter = 0;
 
-
-    MenuStart menu = new MenuStart();
 
     public Game() {
         this.playerCar = new PlayerCar();
     }
 
+
     public void start() {
         Grid.initgrid();
+        MenuStart.MenuStart();
         playerCar.init();
-        Car car = new Car();
-        cars.add(car);
+        //Car car = new Car();
+        //cars.add(car);
         play();
         /*while(!playerCar.isEnterKeyPressed()) {
             //playerCar.init();
@@ -75,8 +75,8 @@ public class Game {
         System.out.println(carSpawnTimer);
         carSpawnTimerCounter++;
         if (carSpawnTimerCounter == carSpawnTimer) {
-            Car car1 = new Car();
-            cars.add(car1);
+            //Car car1 = new Car();
+            cars.add(CarFactory.getNewCar());
             carSpawnTimerCounter = 0;
             if (carSpawnTimer > 12) {
                 carSpawnTimer -= 20;

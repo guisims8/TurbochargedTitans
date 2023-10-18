@@ -1,6 +1,7 @@
-package initGAME;
+package carFactory;
 
 import gridFactory.Grid;
+import initGAME.MenuStart;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -14,7 +15,6 @@ import static gridFactory.Grid.PADDINGY;
 public class PlayerCar implements KeyboardHandler {
 
     private final Picture car;
-    MenuStart menu = new MenuStart();
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private boolean upPressed = false;
@@ -29,7 +29,6 @@ public class PlayerCar implements KeyboardHandler {
 
     public void init() {
         car.draw();
-        menu.MenuStart();
         Keyboard kb = new Keyboard(this);
 
         KeyboardEvent rightPressed = new KeyboardEvent();
@@ -116,27 +115,16 @@ public class PlayerCar implements KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-
-        int minCarX = car.getX();
-        int minCarY = car.getY();
-        int maxCarX = car.getMaxX();
-        int maxCarY = car.getMaxY();
-
-
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_RIGHT:
-                if (maxCarX < Grid.getCols() + PADDINGX) {
                     //moveRight();
                     setRightPressed(true);
-                }
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                if (minCarX > PADDINGX) {
                     setLeftPressed(true);
                     //moveLeft();
-                }
                 break;
 
             case KeyboardEvent.KEY_UP:
@@ -151,20 +139,11 @@ public class PlayerCar implements KeyboardHandler {
                 car.translate(0, -40);
                 break;
 
-
             case KeyboardEvent.KEY_ENTER:
                 enterKeyPressed = true;
-                menu.DeleteMenu();
+                MenuStart.DeleteMenu();
                 break;
-
-
         }
-
-
-    }
-
-    public static boolean collisionDetector(Picture picture) {
-        return true;
     }
 
     public boolean isColliding(Picture other) {
@@ -172,8 +151,6 @@ public class PlayerCar implements KeyboardHandler {
                 car.getX() + car.getWidth() > other.getX() &&
                 car.getY() < other.getY() + other.getHeight() &&
                 car.getY() + car.getHeight() > other.getY();
-
-
         if (collision) {
             System.out.println("Game Over");
         }
