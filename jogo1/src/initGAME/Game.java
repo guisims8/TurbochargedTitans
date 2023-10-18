@@ -11,7 +11,9 @@ import java.util.List;
 public class Game {
     PlayerCar playerCar;
     List<Car> cars = new LinkedList<>();
-    private int carSpawnTimer = 0;
+    private int carSpawnTimer = 200;
+    private int carSpawnTimerCounter = 0;
+
 
     MenuStart menu = new MenuStart();
 
@@ -44,32 +46,44 @@ public class Game {
         while (true) {
             // Pause for a while
             CustomSleep.sleep(10);
-            if (carSpawnTimer == 100) {
-                Car car1 = new Car();
-                cars.add(car1);
-                carSpawnTimer = 0;
-            }
-
-            if (playerCar.isRightPressed()) {
-                playerCar.moveRight();
-            }
-
-            if(playerCar.isLeftPressed()){
-                playerCar.moveLeft();
-            }
-            if (1 == 1) {
-            }
-
+            spawnNewCar();
+            movePlayer();
             Car.moveCars(cars);
-            carSpawnTimer++;
-            for(int i=0; i<cars.size();i++){
+            for (int i = 0; i < cars.size(); i++) {
                 playerCar.isColliding(cars.get(i).getPicture());
-
             }
-
-            //PlayerCar.collisionDetector(car.getPicture());
         }
 
     }
 
+    public void movePlayer() {
+        if (playerCar.isRightPressed()) {
+            playerCar.moveRight();
+        }
+        if (playerCar.isLeftPressed()) {
+            playerCar.moveLeft();
+        }
+        if (playerCar.isUpPressed()) {
+            playerCar.moveUp();
+        }
+        if (playerCar.isDownPressed()) {
+            playerCar.moveDown();
+        }
+    }
+
+    public void spawnNewCar() {
+        System.out.println(carSpawnTimer);
+        carSpawnTimerCounter++;
+        if (carSpawnTimerCounter == carSpawnTimer) {
+            Car car1 = new Car();
+            cars.add(car1);
+            carSpawnTimerCounter = 0;
+            if (carSpawnTimer > 12) {
+                carSpawnTimer -= 20;
+            }
+            if (carSpawnTimer < 10) {
+                carSpawnTimer = 11;
+            }
+        }
+    }
 }

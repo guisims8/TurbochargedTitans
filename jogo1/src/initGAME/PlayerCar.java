@@ -17,6 +17,9 @@ public class PlayerCar implements KeyboardHandler {
     MenuStart menu = new MenuStart();
     private boolean rightPressed = false;
     private boolean leftPressed = false;
+    private boolean upPressed = false;
+    private boolean downPressed = false;
+
     private boolean enterKeyPressed = false;
 
     public PlayerCar() {
@@ -49,9 +52,17 @@ public class PlayerCar implements KeyboardHandler {
         up.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         up.setKey(KeyboardEvent.KEY_UP);
 
+        KeyboardEvent upReleased = new KeyboardEvent();
+        upReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        upReleased.setKey(KeyboardEvent.KEY_UP);
+
         KeyboardEvent down = new KeyboardEvent();
         down.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         down.setKey(KeyboardEvent.KEY_DOWN);
+
+        KeyboardEvent downReleased = new KeyboardEvent();
+        downReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        downReleased.setKey(KeyboardEvent.KEY_DOWN);
 
         KeyboardEvent space = new KeyboardEvent();
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -64,7 +75,9 @@ public class PlayerCar implements KeyboardHandler {
 
         kb.addEventListener(enter);
         kb.addEventListener(down);
+        kb.addEventListener(downReleased);
         kb.addEventListener(up);
+        kb.addEventListener(upReleased);
         kb.addEventListener(rightPressed);
         kb.addEventListener(rightReleased);
         kb.addEventListener(left);
@@ -75,14 +88,28 @@ public class PlayerCar implements KeyboardHandler {
     public void moveRight() {
         int maxCarX = car.getMaxX();
         if (maxCarX < Grid.getCols() + PADDINGX) {
-            car.translate(10, 0);
+            car.translate(8, 0);
+        }
+    }
+
+    public void moveUp() {
+        int minCarY = car.getY();
+        if (minCarY > PADDINGY) {
+            car.translate(0, -8);
+        }
+    }
+
+    public void moveDown() {
+        int maxCarY = car.getMaxY();
+        if (maxCarY < Grid.getRows() + PADDINGY) {
+            car.translate(0, 8);
         }
     }
 
     public void moveLeft() {
         int minCarX = car.getX();
         if (minCarX > PADDINGX) {
-            car.translate(-10, 0);
+            car.translate(-8, 0);
         }
     }
 
@@ -102,7 +129,6 @@ public class PlayerCar implements KeyboardHandler {
                 if (maxCarX < Grid.getCols() + PADDINGX) {
                     //moveRight();
                     setRightPressed(true);
-                    //System.out.println(isRightPressed());
                 }
                 break;
 
@@ -110,20 +136,15 @@ public class PlayerCar implements KeyboardHandler {
                 if (minCarX > PADDINGX) {
                     setLeftPressed(true);
                     //moveLeft();
-
                 }
                 break;
 
             case KeyboardEvent.KEY_UP:
-                if (minCarY > PADDINGY) {
-                    car.translate(0, -15);
-                }
+                setUpPressed(true);
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (maxCarY < Grid.getRows() + PADDINGY) {
-                    car.translate(0, 20);
-                }
+                setDownPressed(true);
                 break;
 
             case KeyboardEvent.KEY_SPACE:
@@ -132,7 +153,7 @@ public class PlayerCar implements KeyboardHandler {
 
 
             case KeyboardEvent.KEY_ENTER:
-                enterKeyPressed=true;
+                enterKeyPressed = true;
                 menu.DeleteMenu();
                 break;
 
@@ -154,9 +175,10 @@ public class PlayerCar implements KeyboardHandler {
 
 
         if (collision) {
-        System.out.println("Game Over");
+            System.out.println("Game Over");
+        }
+        return collision;
     }
-        return collision;}
 
 
     @Override
@@ -167,6 +189,13 @@ public class PlayerCar implements KeyboardHandler {
 
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_LEFT) {
             setLeftPressed(false);
+        }
+
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_UP) {
+            setUpPressed(false);
+        }
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_DOWN) {
+            setDownPressed(false);
         }
 
     }
@@ -193,5 +222,21 @@ public class PlayerCar implements KeyboardHandler {
 
     public void setEnterKeyPressed(boolean enterKeyPressed) {
         this.enterKeyPressed = enterKeyPressed;
+    }
+
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    public void setUpPressed(boolean upPressed) {
+        this.upPressed = upPressed;
+    }
+
+    public boolean isDownPressed() {
+        return downPressed;
+    }
+
+    public void setDownPressed(boolean downPressed) {
+        this.downPressed = downPressed;
     }
 }
