@@ -2,12 +2,16 @@ package initGAME;
 
 import carFactory.*;
 import gridFactory.Grid;
+import music.Music;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import static gridFactory.Grid.gameOver;
+
 public class Game {
     PlayerCar playerCar;
+
     CarFactory carFactory = new CarFactory();
     private List<Car> cars = new LinkedList<>();
     private int carSpawnTimer = 200;
@@ -20,12 +24,15 @@ public class Game {
     private int carSpeed4 = 0;
     public static int score = 0;
 
+    Music initialMusic = new Music("Musics/testesom.wav");
+
 
     public Game() {
         this.playerCar = new PlayerCar();
     }
 
     public void start() {
+        initialMusic.play();
         Grid.initgrid();
         MenuStart.MenuStart();
         playerCar.init();
@@ -34,10 +41,17 @@ public class Game {
 
             );
         }
+        initialMusic.stop();
         play();
     }
 
     public void play() {
+        Music duringGame = new Music("Musics/duringGame.wav");
+        duringGame.play();
+
+        Music policeSong = new Music("Musics/police.wav");
+        policeSong.play();
+
         boolean gameOver = false;
         while (!gameOver) {
             CustomSleep.sleep(15);
@@ -66,9 +80,15 @@ public class Game {
             //TimerTask
             for (int i = 0; i < cars.size(); i++) {
                 if (playerCar.isColliding(cars.get(i).getPicture())) {
+                    duringGame.stop();
+                    policeSong.stop();
                     gameOver = true;
+                    gameOver();
+
                 }
+
             }
+
         }
     }
 

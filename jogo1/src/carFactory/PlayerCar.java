@@ -2,6 +2,7 @@ package carFactory;
 
 import gridFactory.Grid;
 import initGAME.MenuStart;
+import music.Music;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -13,6 +14,7 @@ import static gridFactory.Grid.PADDINGY;
 
 
 public class PlayerCar implements KeyboardHandler {
+
     private final Picture playerCarPicture;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
@@ -20,6 +22,7 @@ public class PlayerCar implements KeyboardHandler {
     private boolean downPressed = false;
     private static int playerSpeed = 8;
     private boolean enterKeyPressed = false;
+
 
     public PlayerCar() {
         this.playerCarPicture = new Picture(368, 430, "images/carblue.png");
@@ -150,9 +153,14 @@ public class PlayerCar implements KeyboardHandler {
                 playerCarPicture.getY() < other.getY() + other.getHeight() &&
                 playerCarPicture.getY() + playerCarPicture.getHeight() > other.getY();
         if (collision) {
-            System.out.println("Game Over");
+           Music crashSound = new Music("Musics/crashsong.wav");
+           crashSound.play();
+           System.out.println("Game Over");
+
         }
+
         return collision;
+
     }
 
 

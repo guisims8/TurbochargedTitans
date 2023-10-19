@@ -16,29 +16,38 @@ public class Grid {
     private static Picture roadImage;
     private static int whichRoad = 0;
 
+    static Picture gameOver = new Picture(10, 0, "images/gameover3.png");
+
 
     public static void initgrid() {
-        roadImage = new Picture(10, 0, "images/final.png");
+        roadImage = new Picture(10, 0, "images/linha1.png");
         roadImage.draw();
     }
+
+
     public static void alternateImages() {
         switch (whichRoad) {
             case 0:
-                roadImage.load("images/road10.png");
+                roadImage.load("images/linha1.png");
                 whichRoad++;
                 break;
             case 1:
-                roadImage.load("images/road11.png");
+                roadImage.load("images/linha2.png");
                 whichRoad++;
             case 2:
-                roadImage.load("images/road12.png");
+                roadImage.load("images/linha3.png");
                 whichRoad++;
                 break;
             case 3:
-                roadImage.load("images/final.png");
+                roadImage.load("images/linha1.png");
                 whichRoad = 0;
                 break;
         }
+    }
+
+
+    public static void gameOver (){
+        gameOver.draw();
     }
 
     public static void deleteRoad(Picture picture) {
