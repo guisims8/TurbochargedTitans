@@ -4,4 +4,5 @@ public enum CarType {
     YELLOW,
     GREEN,
     RED,
+    SCOOTER,
 }

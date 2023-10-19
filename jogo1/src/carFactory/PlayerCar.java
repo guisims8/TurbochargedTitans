@@ -2,7 +2,6 @@ package carFactory;
 
 import gridFactory.Grid;
 import initGAME.MenuStart;
-import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -14,21 +13,21 @@ import static gridFactory.Grid.PADDINGY;
 
 
 public class PlayerCar implements KeyboardHandler {
-    private final Picture car;
+    private final Picture playerCarPicture;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private boolean upPressed = false;
     private boolean downPressed = false;
-
+    private static int playerSpeed = 8;
     private boolean enterKeyPressed = false;
 
     public PlayerCar() {
-        this.car = new Picture(368, 430, "images/carblue.png");
+        this.playerCarPicture = new Picture(368, 430, "images/carblue.png");
     }
 
 
     public void init() {
-        car.draw();
+        playerCarPicture.draw();
         Keyboard kb = new Keyboard(this);
 
         KeyboardEvent rightPressed = new KeyboardEvent();
@@ -85,30 +84,30 @@ public class PlayerCar implements KeyboardHandler {
     }
 
     public void moveRight() {
-        int maxCarX = car.getMaxX();
+        int maxCarX = playerCarPicture.getMaxX();
         if (maxCarX < Grid.getCols() + PADDINGX) {
-            car.translate(8, 0);
+            playerCarPicture.translate(playerSpeed, 0);
         }
     }
 
     public void moveUp() {
-        int minCarY = car.getY();
+        int minCarY = playerCarPicture.getY();
         if (minCarY > PADDINGY) {
-            car.translate(0, -8);
+            playerCarPicture.translate(0, -playerSpeed);
         }
     }
 
     public void moveDown() {
-        int maxCarY = car.getMaxY();
+        int maxCarY = playerCarPicture.getMaxY();
         if (maxCarY < Grid.getRows() + PADDINGY) {
-            car.translate(0, 8);
+            playerCarPicture.translate(0, playerSpeed);
         }
     }
 
     public void moveLeft() {
-        int minCarX = car.getX();
+        int minCarX = playerCarPicture.getX();
         if (minCarX > PADDINGX) {
-            car.translate(-8, 0);
+            playerCarPicture.translate(-playerSpeed, 0);
         }
     }
 
@@ -118,13 +117,11 @@ public class PlayerCar implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_RIGHT:
-                    //moveRight();
-                    setRightPressed(true);
+                setRightPressed(true);
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                    setLeftPressed(true);
-                    //moveLeft();
+                setLeftPressed(true);
                 break;
 
             case KeyboardEvent.KEY_UP:
@@ -136,7 +133,7 @@ public class PlayerCar implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_SPACE:
-                car.translate(0, -40);
+                playerCarPicture.translate(0, -40);
                 break;
 
             case KeyboardEvent.KEY_ENTER:
@@ -147,10 +144,10 @@ public class PlayerCar implements KeyboardHandler {
     }
 
     public boolean isColliding(Picture other) {
-        boolean collision = car.getX() < other.getX() + other.getWidth() &&
-                car.getX() + car.getWidth() > other.getX() &&
-                car.getY() < other.getY() + other.getHeight() &&
-                car.getY() + car.getHeight() > other.getY();
+        boolean collision = playerCarPicture.getX() < other.getX() + other.getWidth() &&
+                playerCarPicture.getX() + playerCarPicture.getWidth() > other.getX() &&
+                playerCarPicture.getY() < other.getY() + other.getHeight() &&
+                playerCarPicture.getY() + playerCarPicture.getHeight() > other.getY();
         if (collision) {
             System.out.println("Game Over");
         }
@@ -174,7 +171,14 @@ public class PlayerCar implements KeyboardHandler {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_DOWN) {
             setDownPressed(false);
         }
+    }
 
+    public static int getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    public static void increasePlayerSpeed(int playerSpeed) {
+        PlayerCar.playerSpeed = playerSpeed;
     }
 
     public boolean isRightPressed() {

@@ -1,8 +1,6 @@
 package initGAME;
 
-import carFactory.Car;
-import carFactory.CarFactory;
-import carFactory.PlayerCar;
+import carFactory.*;
 import gridFactory.Grid;
 
 import java.util.LinkedList;
@@ -10,11 +8,16 @@ import java.util.List;
 
 public class Game {
     PlayerCar playerCar;
+    CarFactory carFactory = new CarFactory();
     private List<Car> cars = new LinkedList<>();
     private int carSpawnTimer = 200;
     private int carSpawnTimerCounter = 0;
-    private int imageAlternateTimer = 0;
-    private int carSpeed=0;
+    private int imageAlternateCounter = 0;
+    private int imageAlternateTimer = 15;
+    private int carSpeed = 0;
+    private int carSpeed2 = 0;
+    private int carSpeed3 = 0;
+    private int carSpeed4 = 0;
 
 
     public Game() {
@@ -36,16 +39,23 @@ public class Game {
             if (carSpawnTimerCounter == carSpawnTimer) {
                 spawnNewCar();
             }
-            /*carSpeed++;
-            if(carSpeed==200){
-                Car.setSpeed(Car.getSpeed()+5);
-            }*/
+            carSpeed++;
+            for (int i = 0; i < cars.size(); i++) {
+                cars.get(i).moveCar(cars, cars.get(i));
+                if (carSpeed == 500) {
+                    //PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 10);
+                    imageAlternateTimer = 5;
+                    Scooter.increaseYellowSpeed(10);
+                    YellowCar.increaseYellowSpeed(10);
+                    GreenCar.increaseGreenSpeed(10);
+
+                }
+            }
             movePlayer();
-            Car.moveCars(cars);
-            imageAlternateTimer++;
-            if (imageAlternateTimer == 15) {
+            imageAlternateCounter++;
+            if (imageAlternateCounter == imageAlternateTimer) {
                 Grid.alternateImages();
-                imageAlternateTimer=0;
+                imageAlternateCounter = 0;
             }
             //Timer
             //TimerTask
@@ -79,13 +89,13 @@ public class Game {
     // a um carro, dá reset ao counter e diminui o próximo carSpawnTimer.
     // Assim os carros começam a aparecer cada vez mais rápido
     public void spawnNewCar() {
-        cars.add(CarFactory.getNewCar());
+        cars.add(carFactory.getNewCar());
         carSpawnTimerCounter = 0;
-        if (carSpawnTimer > 40) {
-            carSpawnTimer -= 20;
+        if (carSpawnTimer > 20) {
+            carSpawnTimer -= 40;
         }
-        if (carSpawnTimer < 40) {
-            carSpawnTimer = 35;
+        if (carSpawnTimer < 20) {
+            carSpawnTimer = 10;
         }
     }
 }

@@ -14,14 +14,11 @@ public class Grid {
     public static final int rows = 600;
     private static Picture roadImage;
     private static int whichRoad = 0;
-    List<Picture> roadPictures = new LinkedList<>();
 
 
     public static void initgrid() {
         roadImage = new Picture(10, 0, "images/final.png");
         roadImage.draw();
-        Rectangle rectangle = new Rectangle(PADDINGX, PADDINGY, cols, rows);
-        rectangle.draw();
     }
     public static void alternateImages() {
         switch (whichRoad) {
