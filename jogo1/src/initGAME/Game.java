@@ -54,7 +54,7 @@ public class Game {
     }
 
     public void play() {
-        Music duringGame = new Music("Musics/duringGame1.wav");
+        Music duringGame = new Music("Musics/duringGameFinal.wav");
         duringGame.play();
 
         Music policeSong = new Music("Musics/police.wav");
