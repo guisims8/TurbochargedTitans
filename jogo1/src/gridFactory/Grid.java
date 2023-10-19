@@ -1,7 +1,9 @@
 package gridFactory;
 
 import carFactory.PlayerCar;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -22,6 +24,7 @@ public class Grid {
     public static void initgrid() {
         roadImage = new Picture(10, 0, "images/linha1.png");
         roadImage.draw();
+
     }
 
 

@@ -3,6 +3,9 @@ package initGAME;
 import carFactory.*;
 import gridFactory.Grid;
 import music.Music;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Text;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +27,10 @@ public class Game {
     private int carSpeed4 = 0;
     public static int score = 0;
 
+    private static Picture fundo;
+
+   // public static Text textScore;
+
     Music initialMusic = new Music("Musics/testesom.wav");
 
 
@@ -36,11 +43,14 @@ public class Game {
         Grid.initgrid();
         MenuStart.MenuStart();
         playerCar.init();
-        while (!playerCar.isEnterKeyPressed()) {
-            CustomSleep.sleep(10
 
-            );
+        while (!playerCar.isEnterKeyPressed()) {
+            CustomSleep.sleep(10);
         }
+
+        fundo = new Picture(10,35,"images/baixofundo.png");
+        fundo.draw();
+
         initialMusic.stop();
         play();
     }
@@ -63,7 +73,7 @@ public class Game {
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).moveCar(cars, cars.get(i));
                 if (carSpeed == 500) {
-                    //PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 10);
+                    PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 5);
                     imageAlternateTimer = 5;
                     Scooter.increaseYellowSpeed(7);
                     YellowCar.increaseYellowSpeed(7);
@@ -80,6 +90,8 @@ public class Game {
             //TimerTask
             for (int i = 0; i < cars.size(); i++) {
                 if (playerCar.isColliding(cars.get(i).getPicture())) {
+                    fundo.delete();
+                    Car.textScore.delete();
                     duringGame.stop();
                     policeSong.stop();
                     gameOver = true;
