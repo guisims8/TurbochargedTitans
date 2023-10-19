@@ -2,6 +2,7 @@ package carFactory;
 
 import gridFactory.Grid;
 import initGAME.MenuStart;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -13,7 +14,6 @@ import static gridFactory.Grid.PADDINGY;
 
 
 public class PlayerCar implements KeyboardHandler {
-
     private final Picture car;
     private boolean rightPressed = false;
     private boolean leftPressed = false;

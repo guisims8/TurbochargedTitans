@@ -13,6 +13,7 @@ public class Game {
     private List<Car> cars = new LinkedList<>();
     private int carSpawnTimer = 200;
     private int carSpawnTimerCounter = 0;
+    private int imageAlternateTimer = 0;
 
 
     public Game() {
@@ -42,15 +43,27 @@ public class Game {
     }
 
     public void play() {
-
-        while (true) {
-            // Pause for a while
+        boolean gameOver = false;
+        while (!gameOver) {
             CustomSleep.sleep(10);
-            spawnNewCar();
+            carSpawnTimerCounter++;
+            if (carSpawnTimerCounter == carSpawnTimer) {
+                spawnNewCar();
+            }
             movePlayer();
             Car.moveCars(cars);
+            imageAlternateTimer++;
+            /*if (imageAlternateTimer == 20) {
+                Grid.alternateImages();
+                imageAlternateTimer=0;
+            }*/
+            //Timer
+            //TimerTask
             for (int i = 0; i < cars.size(); i++) {
-                playerCar.isColliding(cars.get(i).getPicture());
+                if (playerCar.isColliding(cars.get(i).getPicture())) {
+                    gameOver = true;
+                }
+
             }
         }
 
@@ -71,19 +84,18 @@ public class Game {
         }
     }
 
+    // carSpawnTimerCounter é incrementado uma vez a cada 10 ms quando é
+    // igual ao carSpawnTimer chama-se este método que da spawn
+    // a um carro, dá reset ao counter e diminui o próximo carSpawnTimer.
+    // Assim os carros começam a aparecer cada vez mais rápido
     public void spawnNewCar() {
-        System.out.println(carSpawnTimer);
-        carSpawnTimerCounter++;
-        if (carSpawnTimerCounter == carSpawnTimer) {
-            //Car car1 = new Car();
-            cars.add(CarFactory.getNewCar());
-            carSpawnTimerCounter = 0;
-            if (carSpawnTimer > 12) {
-                carSpawnTimer -= 20;
-            }
-            if (carSpawnTimer < 10) {
-                carSpawnTimer = 11;
-            }
+        cars.add(CarFactory.getNewCar());
+        carSpawnTimerCounter = 0;
+        if (carSpawnTimer > 40) {
+            carSpawnTimer -= 20;
+        }
+        if (carSpawnTimer < 40) {
+            carSpawnTimer = 35;
         }
     }
 }
