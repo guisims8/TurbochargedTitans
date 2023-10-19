@@ -48,8 +48,6 @@ public class Game {
             CustomSleep.sleep(10);
         }
 
-        fundo = new Picture(10,35,"images/baixofundo.png");
-        fundo.draw();
 
         initialMusic.stop();
         play();
@@ -90,7 +88,6 @@ public class Game {
             //TimerTask
             for (int i = 0; i < cars.size(); i++) {
                 if (playerCar.isColliding(cars.get(i).getPicture())) {
-                    fundo.delete();
                     Car.textScore.delete();
                     duringGame.stop();
                     policeSong.stop();

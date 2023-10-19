@@ -25,7 +25,7 @@ public class Car {
             textScore.delete();
         }
 
-        textScore = new Text(600,729,"YOUR SCORE: " + Game.score);
+        textScore = new Text(600,690,"YOUR SCORE: " + Game.score);
         textScore.setColor(Color.GREEN);
         textScore.grow(25,10);
         textScore.draw();
