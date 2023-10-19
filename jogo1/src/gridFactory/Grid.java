@@ -12,49 +12,32 @@ public class Grid {
     public static final int PADDINGX = 220;
     public static final int cols = 810;
     public static final int rows = 600;
-    private static Picture roadImage1;
-    private static Picture roadImage2;
-    private static Picture roadImage3;
-    private static Picture roadImage4;
-    private static Picture roadImage5;
+    private static Picture roadImage;
     private static int whichRoad = 0;
     List<Picture> roadPictures = new LinkedList<>();
 
 
     public static void initgrid() {
-        roadImage1 = new Picture(10, 0, "images/final.png");
-        roadImage1.draw();
-        roadImage2 = new Picture(10, 0, "images/road10.png");
-        roadImage3 = new Picture(10, 0, "images/road11.png");
-        roadImage4 = new Picture(10,0,"images/road12.png");
+        roadImage = new Picture(10, 0, "images/final.png");
+        roadImage.draw();
         Rectangle rectangle = new Rectangle(PADDINGX, PADDINGY, cols, rows);
         rectangle.draw();
-
     }
-
-    public static void drawRoad(Picture picture) {
-        picture.draw();
-    }
-
     public static void alternateImages() {
         switch (whichRoad) {
             case 0:
-                drawRoad(roadImage2);
-                deleteRoad(roadImage1);
+                roadImage.load("images/road10.png");
                 whichRoad++;
                 break;
             case 1:
-                drawRoad(roadImage3);
-                deleteRoad(roadImage2);
+                roadImage.load("images/road11.png");
                 whichRoad++;
             case 2:
-                drawRoad(roadImage4);
-                deleteRoad(roadImage3);
+                roadImage.load("images/road12.png");
                 whichRoad++;
                 break;
             case 3:
-                drawRoad(roadImage1);
-                deleteRoad(roadImage4);
+                roadImage.load("images/final.png");
                 whichRoad = 0;
                 break;
         }
@@ -73,14 +56,14 @@ public class Grid {
     }
 
     public static void moveBackground() {
-        roadImage1.translate(0, 0);
+        roadImage.translate(0, 0);
     }
 
     public static Picture getRoadImage() {
-        return roadImage1;
+        return roadImage;
     }
 
     public static void setRoadImage(Picture roadImage) {
-        Grid.roadImage1 = roadImage;
+        Grid.roadImage = roadImage;
     }
 }

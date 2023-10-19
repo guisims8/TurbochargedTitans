@@ -34,11 +34,17 @@ public class Car {
     // speed é uma propriedade static de todos os carros que uso
     // no método moveCars para os mexer
     // Com este método posso aumentar/diminuir a velocidade dos carros
-    public static void increaseAllCarsSpeed(int speed) {
-        speed += speed;
-    }
+
 
     public Picture getPicture() {
         return picture;
+    }
+
+    public static int getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(int speed) {
+        Car.speed = speed;
     }
 }

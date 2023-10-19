@@ -14,49 +14,39 @@ public class Game {
     private int carSpawnTimer = 200;
     private int carSpawnTimerCounter = 0;
     private int imageAlternateTimer = 0;
+    private int carSpeed=0;
 
 
     public Game() {
         this.playerCar = new PlayerCar();
     }
 
-
     public void start() {
         Grid.initgrid();
         MenuStart.MenuStart();
         playerCar.init();
-        //Car car = new Car();
-        //cars.add(car);
         play();
-        /*while(!playerCar.isEnterKeyPressed()) {
-            //playerCar.init();
-            menu.MenuStart();
-        }
-        if(playerCar.isEnterKeyPressed()){
-            menu.DeleteMenu();
-            Grid.initgrid();
-            playerCar.init();
-            Car car = new Car();
-            cars.add(car);
-            play();
-        }*/
     }
 
     public void play() {
         boolean gameOver = false;
         while (!gameOver) {
-            CustomSleep.sleep(10);
+            CustomSleep.sleep(15);
             carSpawnTimerCounter++;
             if (carSpawnTimerCounter == carSpawnTimer) {
                 spawnNewCar();
             }
+            /*carSpeed++;
+            if(carSpeed==200){
+                Car.setSpeed(Car.getSpeed()+5);
+            }*/
             movePlayer();
             Car.moveCars(cars);
             imageAlternateTimer++;
-            /*if (imageAlternateTimer == 20) {
+            if (imageAlternateTimer == 15) {
                 Grid.alternateImages();
                 imageAlternateTimer=0;
-            }*/
+            }
             //Timer
             //TimerTask
             for (int i = 0; i < cars.size(); i++) {
