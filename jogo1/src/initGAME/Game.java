@@ -18,6 +18,7 @@ public class Game {
     private int carSpeed2 = 0;
     private int carSpeed3 = 0;
     private int carSpeed4 = 0;
+    public static int score = 0;
 
 
     public Game() {
@@ -28,6 +29,11 @@ public class Game {
         Grid.initgrid();
         MenuStart.MenuStart();
         playerCar.init();
+        while (!playerCar.isEnterKeyPressed()) {
+            CustomSleep.sleep(10
+
+            );
+        }
         play();
     }
 
@@ -45,10 +51,9 @@ public class Game {
                 if (carSpeed == 500) {
                     //PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 10);
                     imageAlternateTimer = 5;
-                    Scooter.increaseYellowSpeed(10);
-                    YellowCar.increaseYellowSpeed(10);
-                    GreenCar.increaseGreenSpeed(10);
-
+                    Scooter.increaseYellowSpeed(7);
+                    YellowCar.increaseYellowSpeed(7);
+                    GreenCar.increaseGreenSpeed(7);
                 }
             }
             movePlayer();
@@ -63,10 +68,8 @@ public class Game {
                 if (playerCar.isColliding(cars.get(i).getPicture())) {
                     gameOver = true;
                 }
-
             }
         }
-
     }
 
     public void movePlayer() {

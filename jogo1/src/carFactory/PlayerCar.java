@@ -27,7 +27,6 @@ public class PlayerCar implements KeyboardHandler {
 
 
     public void init() {
-        playerCarPicture.draw();
         Keyboard kb = new Keyboard(this);
 
         KeyboardEvent rightPressed = new KeyboardEvent();
@@ -139,6 +138,8 @@ public class PlayerCar implements KeyboardHandler {
             case KeyboardEvent.KEY_ENTER:
                 enterKeyPressed = true;
                 MenuStart.DeleteMenu();
+                this.playerCarPicture.draw();
+
                 break;
         }
     }

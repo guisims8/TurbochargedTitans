@@ -1,5 +1,6 @@
 package gridFactory;
 
+import carFactory.PlayerCar;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 

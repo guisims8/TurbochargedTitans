@@ -1,6 +1,7 @@
 package carFactory;
 
 import gridFactory.Grid;
+import initGAME.Game;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class Car {
             if (car.getPicture().getMaxY() > Grid.PADDINGY + Grid.rows - 30) {
                 car.getPicture().delete();
                 cars.remove(car);
+                Game.score+=1;
+                System.out.println(Game.score);
             }
         }
 

@@ -8,8 +8,7 @@ public class MenuStart {
 
 
     public static void MenuStart(){
-
-        picture = new Picture(13,13,"images/menufinal.png");
+        picture = new Picture(13,0,"images/menufinal.png");
         picture.draw();
 
     }
