@@ -38,22 +38,12 @@ public class Car {
     public void moveCar(List cars, Car car) {
 
 
-
-
             car.getPicture().translate(0, car.carsSpeed);
             if (car.getPicture().getMaxY() > Grid.PADDINGY + Grid.rows - 30) {
                 car.getPicture().delete();
                 cars.remove(car);
                 Game.score+=1;
                 System.out.println(Game.score);
-
-                /*if(textScore != null){
-                    textScore.delete();
-                }
-
-                textScore = new Text(600,690,"YOUR SCORE: " + Game.score);
-                textScore.setColor(Color.GREEN);
-                textScore.grow(25,10);*/
 
 
             }
