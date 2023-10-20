@@ -20,7 +20,7 @@ public class PlayerCar implements KeyboardHandler {
     private boolean leftPressed = false;
     private boolean upPressed = false;
     private boolean downPressed = false;
-    private static int playerSpeed = 8;
+    private static int playerSpeed = 4;
     private boolean enterKeyPressed = false;
 
 
@@ -117,32 +117,25 @@ public class PlayerCar implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
-
             case KeyboardEvent.KEY_RIGHT:
                 setRightPressed(true);
                 break;
-
             case KeyboardEvent.KEY_LEFT:
                 setLeftPressed(true);
                 break;
-
             case KeyboardEvent.KEY_UP:
                 setUpPressed(true);
                 break;
-
             case KeyboardEvent.KEY_DOWN:
                 setDownPressed(true);
                 break;
-
             case KeyboardEvent.KEY_SPACE:
                 playerCarPicture.translate(0, -40);
                 break;
-
             case KeyboardEvent.KEY_ENTER:
                 enterKeyPressed = true;
                 MenuStart.DeleteMenu();
                 this.playerCarPicture.draw();
-
                 break;
         }
     }
@@ -155,8 +148,6 @@ public class PlayerCar implements KeyboardHandler {
         if (collision) {
            Music crashSound = new Music("Musics/crashsong.wav");
            crashSound.play();
-           System.out.println("Game Over");
-
         }
 
         return collision;

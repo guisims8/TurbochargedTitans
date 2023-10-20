@@ -10,4 +10,8 @@ public class GreenCar extends Car{
     public static void increaseGreenSpeed(int speed){
         greenSpeed+=speed;
     }
+
+    public static int getGreenSpeed() {
+        return greenSpeed;
+    }
 }

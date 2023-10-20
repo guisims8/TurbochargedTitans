@@ -3,8 +3,6 @@ package initGAME;
 import carFactory.*;
 import gridFactory.Grid;
 import music.Music;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -17,19 +15,14 @@ public class Game {
 
     CarFactory carFactory = new CarFactory();
     private List<Car> cars = new LinkedList<>();
-    private int carSpawnTimer = 200;
+    private int carSpawnTimer = 100;
     private int carSpawnTimerCounter = 0;
     private int imageAlternateCounter = 0;
-    private int imageAlternateTimer = 15;
+    private int imageAlternateTimer = 20;
     private int carSpeed = 0;
-    private int carSpeed2 = 0;
-    private int carSpeed3 = 0;
-    private int carSpeed4 = 0;
     public static int score = 0;
+    public static int level = 1;
 
-    private static Picture fundo;
-
-   // public static Text textScore;
 
     Music initialMusic = new Music("Musics/testesom.wav");
 
@@ -41,8 +34,10 @@ public class Game {
     public void start() {
         initialMusic.play();
         Grid.initgrid();
+        spawnNewCar();
         MenuStart.MenuStart();
         playerCar.init();
+
 
         while (!playerCar.isEnterKeyPressed()) {
             CustomSleep.sleep(10);
@@ -70,22 +65,27 @@ public class Game {
             carSpeed++;
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).moveCar(cars, cars.get(i));
-                if (carSpeed == 500) {
-                    PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 5);
-                    imageAlternateTimer = 5;
-                    Scooter.increaseYellowSpeed(7);
-                    YellowCar.increaseYellowSpeed(7);
-                    GreenCar.increaseGreenSpeed(7);
+                if (carSpeed == 400) {
+                    if (PlayerCar.getPlayerSpeed() < 8) {
+                        PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 1);
+                    }
+                    imageAlternateTimer--;
+                    if (Scooter.getScooterSpeed() < 13) {
+                        cars.get(i).setCarSpeed(cars.get(i).getCarSpeed() + 2);
+                        Scooter.increaseScooterSpeed(1);
+                        YellowCar.increaseYellowSpeed(1);
+                        GreenCar.increaseGreenSpeed(1);
+                        System.out.println(GreenCar.getGreenSpeed() + " " + Scooter.getScooterSpeed());
+                    }
+                    carSpeed = 0;
                 }
             }
             movePlayer();
             imageAlternateCounter++;
-            if (imageAlternateCounter == imageAlternateTimer) {
+            if (imageAlternateCounter >= imageAlternateTimer) {
                 Grid.alternateImages();
                 imageAlternateCounter = 0;
             }
-            //Timer
-            //TimerTask
             for (int i = 0; i < cars.size(); i++) {
                 if (playerCar.isColliding(cars.get(i).getPicture())) {
                     Car.textScore.delete();
@@ -93,11 +93,8 @@ public class Game {
                     policeSong.stop();
                     gameOver = true;
                     gameOver();
-
                 }
-
             }
-
         }
     }
 
@@ -124,10 +121,14 @@ public class Game {
         cars.add(carFactory.getNewCar());
         carSpawnTimerCounter = 0;
         if (carSpawnTimer > 20) {
-            carSpawnTimer -= 40;
+            carSpawnTimer -= 4;
         }
-        if (carSpawnTimer < 20) {
-            carSpawnTimer = 10;
+        if (Scooter.getScooterSpeed() <13) {
+            if (carSpawnTimer < 25) {
+                carSpawnTimer = 25;
+            }
+        }else{
+            carSpawnTimer=15;
         }
     }
 }

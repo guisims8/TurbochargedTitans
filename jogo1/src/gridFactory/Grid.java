@@ -39,12 +39,9 @@ public class Grid {
                 whichRoad++;
             case 2:
                 roadImage.load("images/linha3.png");
-                whichRoad++;
+                whichRoad=0;
                 break;
-            case 3:
-                roadImage.load("images/linha1.png");
-                whichRoad = 0;
-                break;
+
         }
     }
 

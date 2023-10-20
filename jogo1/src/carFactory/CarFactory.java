@@ -19,10 +19,8 @@ public class CarFactory {
             case 0 -> new GreenCar(carStartPosition());
             case 1 -> new YellowCar(carStartPosition());
             case 2 -> new Scooter(scooterStartPosition());
-            case 3 -> new Scooter(scooterStartPosition());
             default -> new GreenCar(carStartPosition());
         };
-        System.out.println(car.getCarType() + " has " + car.getCarsSpeed() + " speed");
         return car;
     }
 

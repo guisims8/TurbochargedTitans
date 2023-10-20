@@ -13,22 +13,27 @@ public class Car {
     private final CarType carType;
     private int carsSpeed;
     public static Text textScore;
+    public static Text textLevel;
 
     public Car(CarType carType, Picture picture, int speed) {
         this.carType = carType;
         this.picture = picture;
-        this.carsSpeed=speed;
+        this.carsSpeed = speed;
         picture.draw();
 
-
-        if(textScore != null){
+        if (textScore != null) {
             textScore.delete();
         }
 
-        textScore = new Text(600,690,"YOUR SCORE: " + Game.score);
+        textScore = new Text(600, 690, "YOUR SCORE: " + Game.score);
         textScore.setColor(Color.GREEN);
-        textScore.grow(25,10);
+        textScore.grow(25, 10);
         textScore.draw();
+
+        textLevel = new Text(1100, 130, "LEVEL: " + Game.level);
+        textLevel.setColor(Color.BLUE);
+        textLevel.grow(25,10);
+        textLevel.draw();
 
 
     }
@@ -38,32 +43,30 @@ public class Car {
     public void moveCar(List cars, Car car) {
 
 
-            car.getPicture().translate(0, car.carsSpeed);
-            if (car.getPicture().getMaxY() > Grid.PADDINGY + Grid.rows - 30) {
-                car.getPicture().delete();
-                cars.remove(car);
-                Game.score+=1;
-                System.out.println(Game.score);
-
-
-            }
+        car.getPicture().translate(0, car.carsSpeed);
+        if (car.getPicture().getMaxY() > Grid.PADDINGY + Grid.rows - 30) {
+            car.getPicture().delete();
+            cars.remove(car);
+            Game.score += 1;
         }
+    }
 
     // speed é uma propriedade static de todos os carros que uso
     // no método moveCars para os mexer
     // Com este método posso aumentar/diminuir a velocidade dos carros
-    public void increaseCarsSpeed(int speed) {
-        this.carsSpeed = speed;
-    }
     public Picture getPicture() {
         return picture;
     }
 
-    public  int getCarsSpeed() {
+    public int getCarSpeed() {
         return carsSpeed;
     }
 
     public CarType getCarType() {
         return carType;
+    }
+
+    public void setCarSpeed(int carsSpeed) {
+        this.carsSpeed = carsSpeed;
     }
 }

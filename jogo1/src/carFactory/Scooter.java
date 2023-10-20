@@ -9,8 +9,11 @@ public class Scooter extends Car {
         super(CarType.SCOOTER, new Picture(startPosition, -30, CarFactory.chooseScooterPicture()), scooterSpeed);
     }
 
-    public static void increaseYellowSpeed(int speed) {
-        System.out.println("passou");
+    public static void increaseScooterSpeed(int speed) {
         scooterSpeed += speed;
+    }
+
+    public static int getScooterSpeed() {
+        return scooterSpeed;
     }
 }
