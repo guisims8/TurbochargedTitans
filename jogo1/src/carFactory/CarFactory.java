@@ -12,7 +12,6 @@ public class CarFactory {
     private int rightLimit = 954;
     private static int lastStartPosition = 0;
 
-
     public Car getNewCar() {
         int randomCar = (int) Math.floor(Math.random() * 4);
         Car car = switch (randomCar) {

@@ -1,6 +1,7 @@
 package carFactory;
 
 import gridFactory.Grid;
+import initGAME.Game;
 import initGAME.MenuStart;
 import music.Music;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -21,13 +22,13 @@ public class PlayerCar implements KeyboardHandler {
     private boolean upPressed = false;
     private boolean downPressed = false;
     private static int playerSpeed = 4;
+    private int hp = 3;
+    private boolean hasCollided = false;
     private boolean enterKeyPressed = false;
-
 
     public PlayerCar() {
         this.playerCarPicture = new Picture(368, 430, "images/carblue.png");
     }
-
 
     public void init() {
         Keyboard kb = new Keyboard(this);
@@ -72,7 +73,6 @@ public class PlayerCar implements KeyboardHandler {
         enter.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         enter.setKey(KeyboardEvent.KEY_ENTER);
 
-
         kb.addEventListener(enter);
         kb.addEventListener(down);
         kb.addEventListener(downReleased);
@@ -113,7 +113,6 @@ public class PlayerCar implements KeyboardHandler {
         }
     }
 
-
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
@@ -141,7 +140,29 @@ public class PlayerCar implements KeyboardHandler {
     }
 
     public boolean isColliding(Picture other) {
-        boolean collision = playerCarPicture.getX() < other.getX() + other.getWidth() &&
+        if (playerCarPicture.getX() < other.getX() + other.getWidth() &&
+                playerCarPicture.getX() + playerCarPicture.getWidth() > other.getX() &&
+                playerCarPicture.getY() < other.getY() + other.getHeight() &&
+                playerCarPicture.getY() + playerCarPicture.getHeight() > other.getY()) {
+            if (!hasCollided) {
+                Music crashSound = new Music("Musics/crashsong.wav");
+                crashSound.play();
+                other.delete();
+                hp--;
+                System.out.println("HP : " + hp);
+                return true;
+            }
+            if (hp == 0) {
+                hasCollided = true;
+                Music crashSound = new Music("Musics/crashsong.wav");
+                crashSound.play();
+                System.out.println("HP : " + hp);
+                System.out.println("Game Over");
+                return true;
+            }
+        }
+        return false;
+        /*boolean collision = playerCarPicture.getX() < other.getX() + other.getWidth() &&
                 playerCarPicture.getX() + playerCarPicture.getWidth() > other.getX() &&
                 playerCarPicture.getY() < other.getY() + other.getHeight() &&
                 playerCarPicture.getY() + playerCarPicture.getHeight() > other.getY();
@@ -149,22 +170,29 @@ public class PlayerCar implements KeyboardHandler {
            Music crashSound = new Music("Musics/crashsong.wav");
            crashSound.play();
         }
-
-        return collision;
-
+        return collision;*/
     }
 
+    public boolean pickCoin(Picture coin) {
+        boolean coinPick = playerCarPicture.getX() < coin.getX() + coin.getWidth() &&
+                playerCarPicture.getX() + playerCarPicture.getWidth() > coin.getX() &&
+                playerCarPicture.getY() < coin.getY() + coin.getHeight() &&
+                playerCarPicture.getY() + playerCarPicture.getHeight() > coin.getY();
+        if (coinPick) {
+            Game.score += 4;
+            System.out.println("Ganda COIN_a");
+        }
+        return coinPick;
+    }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_RIGHT) {
             setRightPressed(false);
         }
-
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_LEFT) {
             setLeftPressed(false);
         }
-
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_UP) {
             setUpPressed(false);
         }
@@ -219,5 +247,9 @@ public class PlayerCar implements KeyboardHandler {
 
     public void setDownPressed(boolean downPressed) {
         this.downPressed = downPressed;
+    }
+
+    public int getHp() {
+        return hp;
     }
 }
