@@ -15,25 +15,36 @@ public class Car {
     public static Text textScore;
     public static Text textLevel;
 
+    private Picture contador;
+
     public Car(CarType carType, Picture picture, int speed) {
         this.carType = carType;
         this.picture = picture;
         this.carsSpeed = speed;
+
+        contador = new Picture(0,0,"images/contador1.png");
+        contador.draw();
+
+
+
+
+
         picture.draw();
 
         if (textScore != null) {
             textScore.delete();
         }
 
-        textScore = new Text(600, 690, "YOUR SCORE: " + Game.score);
+        textScore = new Text(598, 7, "YOUR SCORE: " + Game.score);
         textScore.setColor(Color.GREEN);
         textScore.grow(25, 10);
+
         textScore.draw();
 
-        textLevel = new Text(1100, 130, "LEVEL: " + Game.level);
+      /*  textLevel = new Text(1100, 130, "LEVEL: " + Game.level);
         textLevel.setColor(Color.BLUE);
         textLevel.grow(25,10);
-        textLevel.draw();
+        textLevel.draw();*/
 
 
     }

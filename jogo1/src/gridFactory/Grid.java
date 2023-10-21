@@ -1,6 +1,7 @@
 package gridFactory;
 
 import carFactory.PlayerCar;
+import initGAME.Game;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
@@ -18,7 +19,9 @@ public class Grid {
     private static Picture roadImage;
     private static int whichRoad = 0;
 
-    static Picture gameOver = new Picture(10, 0, "images/gameover3.png");
+    static Picture gameOver = new Picture(10, 0, "images/gameoverfinal.png");
+
+    static Text finalScore;
 
 
     public static void initgrid() {
@@ -48,6 +51,11 @@ public class Grid {
 
     public static void gameOver (){
         gameOver.draw();
+        finalScore= new Text(1010, 643, "YOUR SCORE: " + Game.score);
+        finalScore.setColor(Color.GREEN);
+        finalScore.grow(55, 30);
+        finalScore.draw();
+
     }
 
     public static void deleteRoad(Picture picture) {
