@@ -29,6 +29,8 @@ public class PlayerCar implements KeyboardHandler {
     private static int hp = 3;
     private boolean hasCollided = false;
     private boolean enterKeyPressed = false;
+    private boolean switchControls = false;
+    Picture drunkDriving = new Picture(65, 10, "images/drunkDriving.png");
 
     public PlayerCar() {
         this.playerCarPicture = new Picture(368, 430, "images/carblue.png");
@@ -126,10 +128,18 @@ public class PlayerCar implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_RIGHT:
-                setRightPressed(true);
+                if (!switchControls) {
+                    setRightPressed(true);
+                } else {
+                    setLeftPressed(true);
+                }
                 break;
             case KeyboardEvent.KEY_LEFT:
-                setLeftPressed(true);
+                if (!switchControls) {
+                    setLeftPressed(true);
+                } else {
+                    setRightPressed(true);
+                }
                 break;
             case KeyboardEvent.KEY_UP:
                 setUpPressed(true);
@@ -146,9 +156,9 @@ public class PlayerCar implements KeyboardHandler {
                 this.playerCarPicture.draw();
                 break;
             case KeyboardEvent.KEY_R:
-                CustomSleep.sleep(2000);
                 Game.deleteElements();
                 GameController.restartCounter++;
+                Grid.deleteGameOverScreen();
                 hp = 3;
                 Game.level = 1;
                 Game.textScore.delete();
@@ -205,10 +215,18 @@ public class PlayerCar implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_RIGHT) {
-            setRightPressed(false);
+            if (!switchControls) {
+                setRightPressed(false);
+            } else {
+                setLeftPressed(false);
+            }
         }
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_LEFT) {
-            setLeftPressed(false);
+            if (!switchControls) {
+                setLeftPressed(false);
+            } else {
+                setRightPressed(false);
+            }
         }
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_UP) {
             setUpPressed(false);
@@ -268,5 +286,23 @@ public class PlayerCar implements KeyboardHandler {
 
     public int getHp() {
         return hp;
+    }
+
+    public boolean isSwitchControls() {
+        return switchControls;
+    }
+
+    public void setSwitchControls() {
+        this.switchControls = true;
+        setRightPressed(false);
+        setLeftPressed(false);
+        drunkDriving.draw();
+    }
+
+    public void setNormalControls(){
+        this.switchControls = false;
+        setRightPressed(false);
+        setLeftPressed(false);
+        drunkDriving.delete();
     }
 }

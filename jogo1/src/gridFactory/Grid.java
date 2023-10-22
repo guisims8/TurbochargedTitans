@@ -51,7 +51,7 @@ public class Grid {
         finalScore.setColor(Color.GREEN);
         finalScore.grow(55, 30);
         finalScore.draw();
-        highScore = new Text(1010, 663, "HIGHSCORE : " + Game.highScore);
+        highScore = new Text(1010, 663, "HIGHSCORE  : " + Game.highScore);
         highScore.setColor(Color.GREEN);
         highScore.grow(55, 30);
         highScore.draw();

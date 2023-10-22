@@ -1,8 +1,6 @@
 package initGAME;
 
 import HighScoreSaver.Controller;
-import HighScoreSaver.Reader;
-import HighScoreSaver.Writer;
 import carFactory.*;
 import gridFactory.Grid;
 import music.Music;
@@ -11,7 +9,6 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,11 +25,12 @@ public class Game {
     private int carSpawnTimerCounter = 0;
     private int imageAlternateCounter = 0;
     private int imageAlternateTimer = 20;
-    private int carSpeed = 0;
+    private int gameSpeed = 0;
     public static int score = 0;
-    public static int level = 1;
+    public static int level = 0;
     public static boolean gameOver = false;
     private int coinSpawnTimerCounter = 0;
+    private int drunkTimer = 0;
     private Picture contador;
     private Picture wantedText;
     public static Text textScore;
@@ -79,7 +77,7 @@ public class Game {
             CustomSleep.sleep(15);
             spawnNewCar();
             spawnNewCoin();
-            carSpeed++;
+            gameSpeed++;
 
             if (playerCar.getHp() > 2) {
                 threeLifes.draw();
@@ -92,22 +90,34 @@ public class Game {
                 twoLifes.delete();
                 oneLife.draw();
             }
+            if (gameSpeed == 300) {
+                if (PlayerCar.getPlayerSpeed() < 9) {
+                    PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 1);
+                }
+                Game.level++;
+                System.out.println(Game.level);
+                if (Game.level < 9) {
+                    updateLevel();
+                    imageAlternateTimer--;
+                }
+            }
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).moveCar(cars, cars.get(i));
-                if (carSpeed == 400) {
-                    Game.level++;
-                    updateLevel();
-                    if (PlayerCar.getPlayerSpeed() < 9) {
-                        PlayerCar.increasePlayerSpeed(PlayerCar.getPlayerSpeed() + 1);
-                    }
-                    imageAlternateTimer--;
+                if (gameSpeed == 300) {
                     if (Scooter.getScooterSpeed() < 13) {
                         cars.get(i).setCarSpeed(cars.get(i).getCarSpeed() + 2);
                         Scooter.increaseScooterSpeed(1);
                         YellowCar.increaseYellowSpeed(1);
                         GreenCar.increaseGreenSpeed(1);
                     }
-                    carSpeed = 0;
+                    gameSpeed = 0;
+                }
+            }
+            if (playerCar.isSwitchControls()) {
+                drunkTimer++;
+                if (drunkTimer >= 300) {
+                    playerCar.setNormalControls();
+                    drunkTimer = 0;
                 }
             }
             movePlayer();
@@ -163,9 +173,6 @@ public class Game {
         contador.draw();
         wantedText = new Picture(1070, 40, "images/wantedText.png");
         wantedText.draw();
-        Picture star = new Picture(starX, 80, "images/star.png");
-        star.draw();
-        stars.add(star);
         textScore = new Text(598, 7, "YOUR SCORE: " + Game.score);
         textScore.draw();
         textScore.setColor(Color.GREEN);
@@ -184,10 +191,10 @@ public class Game {
     }
 
     public void updateLevel() {
-        if (Game.level < 6) {
-            starX += 18;
+        if (Game.level <= 5) {
             Picture newStar = new Picture(starX, starY, "images/star.png");
             newStar.draw();
+            starX += 18;
             stars.add(newStar);
         } else {
             if (starY == 80) {
@@ -230,7 +237,16 @@ public class Game {
             if (playerCar.pickCoin(elements.get(i).getCoin())) {
                 elements.get(i).getCoin().delete();
                 elements.remove(elements.get(i));
-                updateScore();
+                int rnd = (int) Math.floor(Math.random() * 4);
+                if (rnd != 2) {
+                    Music coinSound = new Music("Musics/coin.wav");
+                    coinSound.play();
+                    updateScore();
+                } else {
+                    Music drunk = new Music("Musics/openBottle.wav");
+                    drunk.play();
+                    playerCar.setSwitchControls();
+                }
             }
         }
     }

@@ -13,7 +13,6 @@ public class GameController {
     }
 
     public static void restartGame() throws IOException {
-        Grid.deleteGameOverScreen();
         game.start();
     }
 }
