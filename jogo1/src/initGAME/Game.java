@@ -1,5 +1,8 @@
 package initGAME;
 
+import HighScoreSaver.Controller;
+import HighScoreSaver.Reader;
+import HighScoreSaver.Writer;
 import carFactory.*;
 import gridFactory.Grid;
 import music.Music;
@@ -7,6 +10,8 @@ import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,9 +19,11 @@ import static gridFactory.Grid.gameOver;
 
 public class Game {
     PlayerCar playerCar;
+    public static int highScore;
     CarFactory carFactory = new CarFactory();
-    private List<Car> cars = new LinkedList<>();
-    private List<Elements> elements = new LinkedList<>();
+    private static List<Car> cars = new LinkedList<>();
+    private static List<Elements> elements = new LinkedList<>();
+    private static List<Picture> stars = new LinkedList<>();
     private int carSpawnTimer = 100;
     private int carSpawnTimerCounter = 0;
     private int imageAlternateCounter = 0;
@@ -24,46 +31,46 @@ public class Game {
     private int carSpeed = 0;
     public static int score = 0;
     public static int level = 1;
-    private boolean gameOver = false;
+    public static boolean gameOver = false;
     private int coinSpawnTimerCounter = 0;
     private Picture contador;
     private Picture wantedText;
-    private Picture star;
     public static Text textScore;
     private int starX = 1075;
     private int starY = 80;
-
     Music initialMusic = new Music("Musics/testesom.wav");
     Music duringGame = new Music("Musics/duringGameFinal.wav");
     Music policeSong = new Music("Musics/police.wav");
     Music voiceOne = new Music("Musics/voz1.wav");
-
     Music voiceTwo = new Music("Musics/voz2.wav");
-
-
-
-    Picture threeLifes = new Picture(1073,10,"images/vida3.png");
-    Picture twoLifes = new Picture(1073,10,"images/vida2.png");
-    Picture oneLife = new Picture(1073,10,"images/vida1.png");
+    private Picture threeLifes = new Picture(1073, 10, "images/vida3.png");
+    private Picture twoLifes = new Picture(1073, 10, "images/vida2.png");
+    private static Picture oneLife = new Picture(1073, 10, "images/vida1.png");
 
     public Game() {
-        this.playerCar = new PlayerCar();
+        playerCar = new PlayerCar();
     }
 
-    public void start() {
+    public void start() throws IOException {
         initialMusic.play();
-        Grid.initgrid();
-        spawnNewCar();
+        if (GameController.restartCounter == 0) {
+            Grid.initgrid();
+        }
+
         MenuStart.MenuStart();
-        playerCar.init();
+
+        if (GameController.restartCounter == 0) {
+            playerCar.init();
+        }
         while (!playerCar.isEnterKeyPressed()) {
             CustomSleep.sleep(10);
         }
+        cars.add(carFactory.getNewCar());
         initialMusic.stop();
         play();
     }
 
-    public void play() {
+    public void play() throws IOException {
         initializeScoreAndLevel();
         duringGame.play();
         policeSong.play();
@@ -74,7 +81,7 @@ public class Game {
             spawnNewCoin();
             carSpeed++;
 
-            if (playerCar.getHp() > 2){
+            if (playerCar.getHp() > 2) {
                 threeLifes.draw();
             } else if (playerCar.getHp() == 2) {
                 voiceOne.play();
@@ -85,9 +92,6 @@ public class Game {
                 twoLifes.delete();
                 oneLife.draw();
             }
-
-
-
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).moveCar(cars, cars.get(i));
                 if (carSpeed == 400) {
@@ -102,7 +106,6 @@ public class Game {
                         Scooter.increaseScooterSpeed(1);
                         YellowCar.increaseYellowSpeed(1);
                         GreenCar.increaseGreenSpeed(1);
-                        System.out.println(GreenCar.getGreenSpeed() + " " + Scooter.getScooterSpeed());
                     }
                     carSpeed = 0;
                 }
@@ -160,8 +163,9 @@ public class Game {
         contador.draw();
         wantedText = new Picture(1070, 40, "images/wantedText.png");
         wantedText.draw();
-        star = new Picture(starX, 80, "images/star.png");
+        Picture star = new Picture(starX, 80, "images/star.png");
         star.draw();
+        stars.add(star);
         textScore = new Text(598, 7, "YOUR SCORE: " + Game.score);
         textScore.draw();
         textScore.setColor(Color.GREEN);
@@ -178,11 +182,13 @@ public class Game {
         textScore.grow(25, 10);
         textScore.draw();
     }
+
     public void updateLevel() {
         if (Game.level < 6) {
             starX += 18;
             Picture newStar = new Picture(starX, starY, "images/star.png");
             newStar.draw();
+            stars.add(newStar);
         } else {
             if (starY == 80) {
                 starX = 1057;
@@ -202,13 +208,14 @@ public class Game {
         }
     }
 
-    public void detectCollision() {
+    public void detectCollision() throws IOException {
         for (int i = 0; i < cars.size(); i++) {
             if (playerCar.isColliding(cars.get(i).getPicture())) {
                 cars.get(i).getPicture().delete();
                 cars.remove(cars.get(i));
                 if (playerCar.getHp() == 0) {
                     Game.textScore.delete();
+                    Controller.refreshScore();
                     duringGame.stop();
                     policeSong.stop();
                     gameOver = true;
@@ -226,5 +233,23 @@ public class Game {
                 updateScore();
             }
         }
+    }
+
+    public static void deleteElements() {
+        oneLife.delete();
+        for (Picture star : stars) {
+            star.delete();
+        }
+        stars.clear();
+        for (Car car : cars) {
+            car.getPicture().delete();
+        }
+        cars.clear();
+        for (Elements element : elements) {
+            element.getCoin().delete();
+            System.out.println("passou");
+        }
+        elements.clear();
+
     }
 }

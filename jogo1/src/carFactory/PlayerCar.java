@@ -1,7 +1,9 @@
 package carFactory;
 
 import gridFactory.Grid;
+import initGAME.CustomSleep;
 import initGAME.Game;
+import initGAME.GameController;
 import initGAME.MenuStart;
 import music.Music;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -9,6 +11,8 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+
+import java.io.IOException;
 
 import static gridFactory.Grid.PADDINGX;
 import static gridFactory.Grid.PADDINGY;
@@ -73,6 +77,10 @@ public class PlayerCar implements KeyboardHandler {
         enter.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         enter.setKey(KeyboardEvent.KEY_ENTER);
 
+        KeyboardEvent rPressed = new KeyboardEvent();
+        rPressed.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        rPressed.setKey(KeyboardEvent.KEY_R);
+
         kb.addEventListener(enter);
         kb.addEventListener(down);
         kb.addEventListener(downReleased);
@@ -83,6 +91,7 @@ public class PlayerCar implements KeyboardHandler {
         kb.addEventListener(left);
         kb.addEventListener(leftReleased);
         kb.addEventListener(space);
+        kb.addEventListener(rPressed);
     }
 
     public void moveRight() {
@@ -136,6 +145,23 @@ public class PlayerCar implements KeyboardHandler {
                 MenuStart.DeleteMenu();
                 this.playerCarPicture.draw();
                 break;
+            case KeyboardEvent.KEY_R:
+                CustomSleep.sleep(2000);
+                Game.deleteElements();
+                GameController.restartCounter++;
+                hp = 3;
+                Game.level = 1;
+                Game.textScore.delete();
+                Game.score = 0;
+                Game.gameOver = false;
+                try {
+                    GameController.restartGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                System.out.println("dsfsdf");
+                break;
         }
     }
 
@@ -152,25 +178,16 @@ public class PlayerCar implements KeyboardHandler {
                 System.out.println("HP : " + hp);
                 return true;
             }
-            if (hp == 0) {
+            /*if (hp == 0) {
                 hasCollided = true;
                 Music crashSound = new Music("Musics/crashsong.wav");
                 crashSound.play();
                 System.out.println("HP : " + hp);
                 System.out.println("Game Over");
                 return true;
-            }
+            }*/
         }
         return false;
-        /*boolean collision = playerCarPicture.getX() < other.getX() + other.getWidth() &&
-                playerCarPicture.getX() + playerCarPicture.getWidth() > other.getX() &&
-                playerCarPicture.getY() < other.getY() + other.getHeight() &&
-                playerCarPicture.getY() + playerCarPicture.getHeight() > other.getY();
-        if (collision) {
-           Music crashSound = new Music("Musics/crashsong.wav");
-           crashSound.play();
-        }
-        return collision;*/
     }
 
     public boolean pickCoin(Picture coin) {

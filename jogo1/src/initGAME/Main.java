@@ -1,10 +1,14 @@
 package initGAME;
 
-import music.Music;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
+        GameController gameController = new GameController();
+        try {
+            gameController.startGame();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

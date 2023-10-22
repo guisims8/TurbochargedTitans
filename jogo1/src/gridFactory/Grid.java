@@ -1,14 +1,9 @@
 package gridFactory;
 
-import carFactory.PlayerCar;
 import initGAME.Game;
 import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class Grid {
@@ -19,9 +14,10 @@ public class Grid {
     private static Picture roadImage;
     private static int whichRoad = 0;
 
-    static Picture gameOver = new Picture(10, 0, "images/gameoverfinal.png");
+    private static Picture gameOver = new Picture(10, 0, "images/gameoverfinal.png");
 
-    static Text finalScore;
+    private static Text finalScore;
+    private static Text highScore;
 
 
     public static void initgrid() {
@@ -42,20 +38,29 @@ public class Grid {
                 whichRoad++;
             case 2:
                 roadImage.load("images/linha3.png");
-                whichRoad=0;
+                whichRoad = 0;
                 break;
 
         }
     }
 
 
-    public static void gameOver (){
+    public static void gameOver() {
         gameOver.draw();
-        finalScore= new Text(1010, 643, "YOUR SCORE: " + Game.score);
+        finalScore = new Text(1010, 623, "YOUR SCORE: " + Game.score);
         finalScore.setColor(Color.GREEN);
         finalScore.grow(55, 30);
         finalScore.draw();
+        highScore = new Text(1010, 663, "HIGHSCORE : " + Game.highScore);
+        highScore.setColor(Color.GREEN);
+        highScore.grow(55, 30);
+        highScore.draw();
+    }
 
+    public static void deleteGameOverScreen() {
+        gameOver.delete();
+        finalScore.delete();
+        System.out.println(" deleteMenu");
     }
 
     public static void deleteRoad(Picture picture) {

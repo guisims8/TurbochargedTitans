@@ -31,6 +31,10 @@ public class Music {
         }
     }
 
+    public void restart(){
+        clip.start();
+    }
+
     public void stop() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
