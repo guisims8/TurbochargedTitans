@@ -22,7 +22,7 @@ public class PlayerCar implements KeyboardHandler {
     private boolean upPressed = false;
     private boolean downPressed = false;
     private static int playerSpeed = 4;
-    private int hp = 3;
+    private static int hp = 3;
     private boolean hasCollided = false;
     private boolean enterKeyPressed = false;
 

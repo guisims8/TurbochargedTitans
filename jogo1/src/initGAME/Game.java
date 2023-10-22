@@ -36,6 +36,15 @@ public class Game {
     Music initialMusic = new Music("Musics/testesom.wav");
     Music duringGame = new Music("Musics/duringGameFinal.wav");
     Music policeSong = new Music("Musics/police.wav");
+    Music voiceOne = new Music("Musics/voz1.wav");
+
+    Music voiceTwo = new Music("Musics/voz2.wav");
+
+
+
+    Picture threeLifes = new Picture(1073,10,"images/vida3.png");
+    Picture twoLifes = new Picture(1073,10,"images/vida2.png");
+    Picture oneLife = new Picture(1073,10,"images/vida1.png");
 
     public Game() {
         this.playerCar = new PlayerCar();
@@ -64,6 +73,21 @@ public class Game {
             spawnNewCar();
             spawnNewCoin();
             carSpeed++;
+
+            if (playerCar.getHp() > 2){
+                threeLifes.draw();
+            } else if (playerCar.getHp() == 2) {
+                voiceOne.play();
+                threeLifes.delete();
+                twoLifes.draw();
+            } else {
+                voiceTwo.play();
+                twoLifes.delete();
+                oneLife.draw();
+            }
+
+
+
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).moveCar(cars, cars.get(i));
                 if (carSpeed == 400) {
